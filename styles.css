@@ -1,7 +1,36 @@
 /* background color */
 body {
     background-color: #0f4c81;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: beige;
 }
-.header {
+
+/* haeder elements */
+#header {
     text-align: center;
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    
+}
+
+/* left sections */
+#qAndA{
+    margin: auto;
+    width: 75%;
+    float: center;  
+}
+
+#questions{
+    font-size: x-large;
+}
+
+li {
+    list-style: none;
+    margin: 10px;
+    padding: 10px;
+    background-color: rgb(32, 30, 30);
+    border: solid;
+    border-radius: 3px;
+    border-color:  rgb(32, 30, 30);
 }
