@@ -21,10 +21,18 @@ body {
     float: center;  
 }
 
-#questions{
+/* update font-size of question */
+#question{
     font-size: x-large;
 }
 
+/* add hover color change to answers */
+li:hover{
+    background-color: lightgrey;
+    border-color: lightgrey;
+}
+
+/* add  style changes to answer list*/
 li {
     list-style: none;
     margin: 10px;
