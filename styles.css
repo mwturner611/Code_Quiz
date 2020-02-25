@@ -22,18 +22,19 @@ body {
 }
 
 /* update font-size of question */
-#question{
+#questionBox{
     font-size: x-large;
 }
 
 /* add hover color change to answers */
-li:hover{
+.answerStyle:hover{
     background-color: lightgrey;
     border-color: lightgrey;
 }
 
+
 /* add  style changes to answer list*/
-li {
+.answerStyle {
     list-style: none;
     margin: 10px;
     padding: 10px;
@@ -41,4 +42,8 @@ li {
     border: solid;
     border-radius: 3px;
     border-color:  rgb(32, 30, 30);
+    cursor: pointer;
+}
+li {
+    list-style: none;
 }
