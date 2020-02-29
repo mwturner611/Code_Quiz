@@ -6,94 +6,153 @@ var answer2 = document.getElementById('answer2');
 var answer3 = document.getElementById('answer3');
 var answer4 = document.getElementById('answer4');
 var button = document.getElementById('button');
+var scoreBoard = document.getElementById('scoreBoard');
 var timeRemaining;
 var numberOfClicks = 0;
 var score = 0;
 var numberOfAnswers = 0;
 var questionUp = 1;
+var answerValue = 0;
 
-// question objecs
 
-
-var question1 = {
+// question array
+var questions = [
+question1 = {
   question: "Which option below is the best example of camel case?",
   firstAnswer: "CamelCase",
   secondAnswer: "camelCase",
   thirdAnswer: "CAMELCASE",
   fourthAnswer: "camelcase",
-}
-var question2 = {
+},
+question2 = {
   question: "Which one is right?",
   firstAnswer: "Wrong",
   secondAnswer: "Wrong",
   thirdAnswer: "Wrong",
   fourthAnswer: "Right",
-}
-var question3 = {
+},
+question3 = {
   question: "Which one is right?",
   firstAnswer: "Wrong",
   secondAnswer: "Right",
   thirdAnswer: "Wrong",
   fourthAnswer: "Right",
-}
-var question4 = {
+},
+question4 = {
   question: "Which one is right?",
   firstAnswer: "Wrong",
   secondAnswer: "Wrong",
   thirdAnswer: "Right",
   fourthAnswer: "Wrong",
-}
-var question5 = {
+},
+question5 = {
   question: "Which one is right?",
   firstAnswer: "Right",
   secondAnswer: "Wrong",
   thirdAnswer: "Wrong",
   fourthAnswer: "Wrong",
-}
-var question6 = {
+},
+question6 = {
   question: "Which one is right?",
   firstAnswer: "Wrong",
   secondAnswer: "Wrong",
   thirdAnswer: "Right",
   fourthAnswer: "Wrong",
-}
-var question7 = {
+},
+question7 = {
   question: "Which one is right?",
   firstAnswer: "Wrong",
   secondAnswer: "Right",
   thirdAnswer: "Wrong",
   fourthAnswer: "Right",
-}
-var question8 = {
+},
+question8 = {
   question: "Which one is right?",
   firstAnswer: "Right",
   secondAnswer: "Wrong",
   thirdAnswer: "Wrong",
   fourthAnswer: "Wrong",
-}
-var question9 = {
+},
+question9 = {
+  question: "Which one is right?",
+  firstAnswer: "Wrong",
+  secondAnswer: "Wrong",
+  thirdAnswer: "Wrong",
+  fourthAnswer: "Right",
+},
+question10 = {
   question: "Which one is right?",
   firstAnswer: "Wrong",
   secondAnswer: "Wrong",
   thirdAnswer: "Wrong",
   fourthAnswer: "Right",
 }
-var question10 = {
-  question: "Which one is right?",
-  firstAnswer: "Wrong",
-  secondAnswer: "Wrong",
-  thirdAnswer: "Wrong",
-  fourthAnswer: "Right",
+];
+
+console.log(questions.length);
+console.log(questions);
+
+// positive score display
+function positveScoreDisplay(){
+  answerValue = 10;
+  scoreBoard.innerText = "Correct! That's " + answerValue + " points for this one. You have " + score + "points total."
 }
 
-function assignQuestion(){
-
-  questionBox.innerText = question1.question;
-  answer1.innerText = question1.firstAnswer;
-  answer2.innerText = question1.secondAnswer;
-  answer3.innerText = question1.thirdAnswer;
-  answer4.innerText = question1.fourthAnswer;
+// negative score display
+function negativeScoreDisplay(){
+  answerValue = -10;
+  scoreBoard.innerText = "Sorry that's wrong! That's " + answerValue + " points for this one. You have " + score + "points total."
 }
+
+// assign question and answer content and add event listeners
+function assignQuestion(a){
+  questionBox.innerText = a.question;
+  answer1.innerText = a.firstAnswer;
+  answer2.innerText = a.secondAnswer;
+  answer3.innerText = a.thirdAnswer;
+  answer4.innerText = a.fourthAnswer;
+
+  answer1.addEventListener("click", function(){
+    if (a.firstAnswer === a.rightAnswer){
+      score = score + 10;
+      setTimeout(positveScoreDisplay(), 3000)
+    }
+    else{
+      score = score - 10;
+      setTimeout(negativeScoreDisplay(), 3000)
+    }
+  });
+  answer2.addEventListener("click", function(){
+    if (a.secondAnswer === a.rightAnswer){
+      score = score + 10;
+      setTimeout(positveScoreDisplay(), 3000);
+    }
+    else{
+      score = score - 10;
+      setTimeout(negativeScoreDisplay(), 3000);
+    }
+  })
+  answer3.addEventListener("click", function(){
+    if (a.thirdAnswer === a.rightAnswer){
+      score = score + 10;
+      setTimeout(positveScoreDisplay(), 3000);
+    }
+    else{
+      score = score - 10;
+      setTimeout(negativeScoreDisplay(), 3000);
+    }
+  })
+  answer4.addEventListener("click", function(){
+    if (a.fourthAnswer === a.rightAnswer){
+      score = score + 10;
+      setTimeout(positveScoreDisplay(), 3000);
+    }
+    else{
+      score = score - 10;
+      setTimeout(negativeScoreDisplay(), 3000);
+    }
+  })
+};
 
 // start quiz
 function startQuiz () {
@@ -102,8 +161,8 @@ function startQuiz () {
     setInterval(function() {
         if (timeRemaining >= 0) {
           console.log(timeRemaining);
-          // Change button text and start the timer
-          button.innerText = "Submit";
+          // remove the button text and start the timer
+          button.remove();
           timer.innerText = "Time Remaining: " + timeRemaining;
 
           // count down the timer
@@ -115,36 +174,56 @@ function startQuiz () {
           answer3.setAttribute("class", "answerStyle");
           answer4.setAttribute("class", "answerStyle");
 
-          // assign question and answer text for question
-
-          assignQuestion();
-
-          if (questionUp === 1){
-            answer1.addEventListener("click", function(){
+          // run functions for the question up
+          while (questionUp < 11) {
+            if(questionUp === 1){
+              assignQuestion(question1);
+              questionUp = questionUp + 1;
+            };
+            if(questionUp === 2){
+              assignQuestion(question2);
               questionUp++;
-              questionBox.innerText = "Wrong!"
-              timeRemaining = timeRemaining - 10;  
-            })
-            answer2.addEventListener("click", function(){
+            };
+            if(questionUp === 3){
+              assignQuestion(question3);
               questionUp++;
-              questionBox.innerText = "Correct!"
-              timeRemaining = timeRemaining + 5;
-              score = score + 10;  
-            })
-            answer3.addEventListener("click", function(){
+            };
+            if(questionUp === 4){
+              assignQuestion(question4);
               questionUp++;
-              questionBox.innerText = "Wrong!"
-              timeRemaining = timeRemaining - 10;  
-            })
-            answer4.addEventListener("click", function(){
+            };
+            if(questionUp === 5){
+              assignQuestion(question5);
               questionUp++;
-              questionBox.innerText = "Wrong!"
-              timeRemaining = timeRemaining - 10;  
-            })
+            };
+            if(questionUp === 6){
+              assignQuestion(question6);
+              questionUp++;
+            };
+            if(questionUp === 7){
+              assignQuestion(question7);
+              questionUp++;
+            };
+            if(questionUp === 8){
+              assignQuestion(question8);
+              questionUp++;
+            };
+            if(questionUp === 9){
+              assignQuestion(question9);
+              questionUp++;
+            };
+            if(questionUp === 10){
+              assignQuestion(question10);
+              questionUp++;
+            }
+            else{
+              alert("it's over")
+            };
+            
           }
+          
 
-         
-
+        
           
         }
         else{
