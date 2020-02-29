@@ -7,9 +7,8 @@ var button = document.getElementById('button');
 var scoreBoard = document.getElementById('scoreBoard');
 var userAnswer = document.querySelectorAll('forAnsers')
 var timeRemaining;
-var numberOfClicks = 0;
 var score = 0;
-var numberOfAnswers = 0;
+var totalPossible = 0;
 var questionUp = 0;
 var answerValue = 0;
 
@@ -90,13 +89,15 @@ question10 = {
 
 // positive score display
 function positveScoreDisplay(){
-  answerValue = 10;
-  scoreBoard.innerText = "Correct! That's " + answerValue + " points for this one. You have " + score + "points total."
+  totalPossible = 10 * (questionUp + 1);
+  score = score + 10;
+  scoreBoard.innerText = "Correct! you've got " + score + " points out of " + totalPossible + " points possible."
 }
 
 // negative score display
 function negativeScoreDisplay(){
-  scoreBoard.innerText = "Sorry that's wrong! You have " + score + "points total."
+  totalPossible = 10 * (questionUp + 1);
+  scoreBoard.innerText = "Sorry that's wrong! You have " + score + " points out of " + totalPossible + " points possible"
 }
 
 // assign question and answer content and add event listeners
@@ -125,7 +126,6 @@ function assignQuestion(a){
 
   // assign styles to the answer list
   li1.setAttribute("class","answerStyle");
-  // li1.setAttribute("id", "li1Id")
   li2.setAttribute("class","answerStyle");
   li3.setAttribute("class","answerStyle");
   li4.setAttribute("class","answerStyle");    
@@ -146,10 +146,10 @@ function assignQuestion(a){
 // check answer function
 function checkAnswer(){
   if(this.value === 1){
-    console.log("Correct")
+    positveScoreDisplay();
   }
   else{
-    console.log("Wrong")
+    negativeScoreDisplay();
   }
   ;
 }
