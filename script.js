@@ -17,10 +17,10 @@ var answerValue = 0;
 var questions = [
 question1 = {
   question: "Which option below is the best example of camel case?",
-  firstAnswer: "CamelCase",
-  secondAnswer: "camelCase",
-  thirdAnswer: "CAMELCASE",
-  fourthAnswer: "camelcase",
+  firstAnswer: {text: "CamelCase", rW: "0"},
+  secondAnswer: {text: "camelCase", rW: "1"},
+  thirdAnswer: {text: "CAMELCASE", rW: "0"},
+  fourthAnswer: {text: "camelcase", rW: "0"},
 },
 question2 = {
   question: "Which one is right?",
@@ -106,15 +106,18 @@ function assignQuestion(a){
   var li3 = document.createElement("li");
   var li4 = document.createElement("li");
 
-  // store the list items in a variable
-  var listItems = document.getElementsByTagName("li");
-
   // assign question and answers
   questionBox.innerText = questions[a].question;
-  li1.innerText = questions[a].firstAnswer;
-  li2.innerText = questions[a].secondAnswer;
-  li3.innerText = questions[a].thirdAnswer;
-  li4.innerText = questions[a].fourthAnswer;
+  li1.innerText = questions[a].firstAnswer.text;
+  li2.innerText = questions[a].secondAnswer.text;
+  li3.innerText = questions[a].thirdAnswer.text;
+  li4.innerText = questions[a].fourthAnswer.text;
+
+  // assign value to li tags
+  li1.value = questions[a].firstAnswer.rW;
+  li2.value = questions[a].secondAnswer.rW;
+  li3.value = questions[a].thirdAnswer.rW;
+  li4.value = questions[a].fourthAnswer.rW;
 
   // append them to the page
   ul1.appendChild(li1);
@@ -127,48 +130,7 @@ function assignQuestion(a){
   li2.setAttribute("class","answerStyle");
   li3.setAttribute("class","answerStyle");
   li4.setAttribute("class","answerStyle");
-  
-  
-  // answer1.addEventListener("click", function(){
-  //   if (a.firstAnswer === a.rightAnswer){
-  //     score = score + 10;
-  //     setTimeout(positveScoreDisplay(), 3000)
-  //   }
-  //   else{
-  //     score = score - 10;
-  //     setTimeout(negativeScoreDisplay(), 3000)
-  //   }
-  // });
-  // answer2.addEventListener("click", function(){
-  //   if (a.secondAnswer === a.rightAnswer){
-  //     score = score + 10;
-  //     setTimeout(positveScoreDisplay(), 3000);
-  //   }
-  //   else{
-  //     score = score - 10;
-  //     setTimeout(negativeScoreDisplay(), 3000);
-  //   }
-  // })
-  // answer3.addEventListener("click", function(){
-  //   if (a.thirdAnswer === a.rightAnswer){
-  //     score = score + 10;
-  //     setTimeout(positveScoreDisplay(), 3000);
-  //   }
-  //   else{
-  //     score = score - 10;
-  //     setTimeout(negativeScoreDisplay(), 3000);
-  //   }
-  // })
-  // answer4.addEventListener("click", function(){
-  //   if (a.fourthAnswer === a.rightAnswer){
-  //     score = score + 10;
-  //     setTimeout(positveScoreDisplay(), 3000);
-  //   }
-  //   else{
-  //     score = score - 10;
-  //     setTimeout(negativeScoreDisplay(), 3000);
-  //   }
-  // })
+    
 };
 
 // start timer function
