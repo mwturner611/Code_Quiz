@@ -5,6 +5,7 @@ var ul1 = document.getElementById('ul1');
 var ul2 = document.getElementById('ul2');
 var button = document.getElementById('button');
 var scoreBoard = document.getElementById('scoreBoard');
+var userAnswer = document.querySelectorAll('forAnsers')
 var timeRemaining;
 var numberOfClicks = 0;
 var score = 0;
@@ -106,6 +107,9 @@ function assignQuestion(a){
   var li3 = document.createElement("li");
   var li4 = document.createElement("li");
 
+  // store li's in array
+  var listItems = document.getElementsByTagName("li");
+
   // assign question and answers
   questionBox.innerText = questions[a].question;
   li1.innerText = questions[a].firstAnswer.text;
@@ -119,21 +123,38 @@ function assignQuestion(a){
   li3.value = questions[a].thirdAnswer.rW;
   li4.value = questions[a].fourthAnswer.rW;
 
+  // assign styles to the answer list
+  li1.setAttribute("class","answerStyle");
+  // li1.setAttribute("id", "li1Id")
+  li2.setAttribute("class","answerStyle");
+  li3.setAttribute("class","answerStyle");
+  li4.setAttribute("class","answerStyle");    
+
   // append them to the page
   ul1.appendChild(li1);
   ul1.appendChild(li2);
   ul2.appendChild(li3);
   ul2.appendChild(li4);
 
-  // assign styles to the answer list
-  li1.setAttribute("class","answerStyle");
-  li2.setAttribute("class","answerStyle");
-  li3.setAttribute("class","answerStyle");
-  li4.setAttribute("class","answerStyle");
-    
+ //Look for clicks on the answers
+  for (var i = 0; i < listItems.length; i++){
+    listItems[i].addEventListener('click', checkAnswer);
+  };
+ 
 };
 
-// start timer function
+// check answer function
+function checkAnswer(){
+  if(this.value === 1){
+    console.log("Correct")
+  }
+  else{
+    console.log("Wrong")
+  }
+  ;
+}
+
+// start timer function 
 function startQuiz () {
   timeRemaining = 60;
 
@@ -148,15 +169,17 @@ function startQuiz () {
       timeRemaining--;
     }
     else{
+        // stop tiimer and end the game function due to out of time
         clearInterval();
     }
   }, 1000);
-  assignQuestion(questionUp);  
+   
 }
 
 
 // start button launches the timer function and question function
 button.addEventListener("click", function(){
   startQuiz();
+  assignQuestion(questionUp); 
   });
 
