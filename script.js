@@ -1,17 +1,15 @@
 // assign variables
 var timer = document.getElementById('timer');
 var questionBox = document.getElementById('questionBox');
-var answer1 = document.getElementById('answer1');
-var answer2 = document.getElementById('answer2');
-var answer3 = document.getElementById('answer3');
-var answer4 = document.getElementById('answer4');
+var ul1 = document.getElementById('ul1');
+var ul2 = document.getElementById('ul2');
 var button = document.getElementById('button');
 var scoreBoard = document.getElementById('scoreBoard');
 var timeRemaining;
 var numberOfClicks = 0;
 var score = 0;
 var numberOfAnswers = 0;
-var questionUp = 1;
+var questionUp = 0;
 var answerValue = 0;
 
 
@@ -100,16 +98,37 @@ function negativeScoreDisplay(){
   scoreBoard.innerText = "Sorry that's wrong! You have " + score + "points total."
 }
 
-
-
 // assign question and answer content and add event listeners
 function assignQuestion(a){
-  questionBox.innerText = questions[a].question;
-  answer1.innerText = questions[a].firstAnswer;
-  answer2.innerText = questions[a].secondAnswer;
-  answer3.innerText = questions[a].thirdAnswer;
-  answer4.innerText = questions[a].fourthAnswer;
+  // create list items
+  var li1 = document.createElement("li");
+  var li2 = document.createElement("li");
+  var li3 = document.createElement("li");
+  var li4 = document.createElement("li");
 
+  // store the list items in a variable
+  var listItems = document.getElementsByTagName("li");
+
+  // assign question and answers
+  questionBox.innerText = questions[a].question;
+  li1.innerText = questions[a].firstAnswer;
+  li2.innerText = questions[a].secondAnswer;
+  li3.innerText = questions[a].thirdAnswer;
+  li4.innerText = questions[a].fourthAnswer;
+
+  // append them to the page
+  ul1.appendChild(li1);
+  ul1.appendChild(li2);
+  ul2.appendChild(li3);
+  ul2.appendChild(li4);
+
+  // assign styles to the answer list
+  li1.setAttribute("class","answerStyle");
+  li2.setAttribute("class","answerStyle");
+  li3.setAttribute("class","answerStyle");
+  li4.setAttribute("class","answerStyle");
+  
+  
   // answer1.addEventListener("click", function(){
   //   if (a.firstAnswer === a.rightAnswer){
   //     score = score + 10;
@@ -152,46 +171,30 @@ function assignQuestion(a){
   // })
 };
 
-// start quiz
+// start timer function
 function startQuiz () {
-    timeRemaining = 60;
+  timeRemaining = 60;
 
-    setInterval(function() {
-        if (timeRemaining >= 0) {
-          console.log(timeRemaining);
-          // remove the button text and start the timer
-          button.remove();
-          timer.innerText = "Time Remaining: " + timeRemaining;
+  setInterval(function() {
+    if (timeRemaining > 0) {
+      
+      // remove the button text and start the timer
+      button.remove();
+      timer.innerText = "Time Remaining: " + timeRemaining;
 
-          // count down the timer
-          timeRemaining--;
-
-          // assign attributes and text to the buttons
-          answer1.setAttribute("class", "answerStyle");
-          answer2.setAttribute("class", "answerStyle");
-          answer3.setAttribute("class", "answerStyle");
-          answer4.setAttribute("class", "answerStyle");
-
-          // run functions for the question up
-        for (var i = 0; i < questions.length; i++) {
-          assignQuestion(i);
-        }
-
-        
-          
-        }
-        else{
-            clearInterval();
-        }
-    }, 1000);
+      // count down the timer
+      timeRemaining--;
+    }
+    else{
+        clearInterval();
+    }
+  }, 1000);
+  assignQuestion(questionUp);  
 }
 
 
-// have button setoff the first function and second function
+// start button launches the timer function and question function
 button.addEventListener("click", function(){
-  if (numberOfClicks === 0){
-    startQuiz();
-    numberOfClicks++
-    console.log(numberOfClicks);
-  }});
+  startQuiz();
+  });
 
