@@ -89,9 +89,6 @@ question10 = {
 }
 ];
 
-console.log(questions.length);
-console.log(questions);
-
 // positive score display
 function positveScoreDisplay(){
   answerValue = 10;
@@ -100,58 +97,59 @@ function positveScoreDisplay(){
 
 // negative score display
 function negativeScoreDisplay(){
-  answerValue = -10;
-  scoreBoard.innerText = "Sorry that's wrong! That's " + answerValue + " points for this one. You have " + score + "points total."
+  scoreBoard.innerText = "Sorry that's wrong! You have " + score + "points total."
 }
+
+
 
 // assign question and answer content and add event listeners
 function assignQuestion(a){
-  questionBox.innerText = a.question;
-  answer1.innerText = a.firstAnswer;
-  answer2.innerText = a.secondAnswer;
-  answer3.innerText = a.thirdAnswer;
-  answer4.innerText = a.fourthAnswer;
+  questionBox.innerText = questions[a].question;
+  answer1.innerText = questions[a].firstAnswer;
+  answer2.innerText = questions[a].secondAnswer;
+  answer3.innerText = questions[a].thirdAnswer;
+  answer4.innerText = questions[a].fourthAnswer;
 
-  answer1.addEventListener("click", function(){
-    if (a.firstAnswer === a.rightAnswer){
-      score = score + 10;
-      setTimeout(positveScoreDisplay(), 3000)
-    }
-    else{
-      score = score - 10;
-      setTimeout(negativeScoreDisplay(), 3000)
-    }
-  });
-  answer2.addEventListener("click", function(){
-    if (a.secondAnswer === a.rightAnswer){
-      score = score + 10;
-      setTimeout(positveScoreDisplay(), 3000);
-    }
-    else{
-      score = score - 10;
-      setTimeout(negativeScoreDisplay(), 3000);
-    }
-  })
-  answer3.addEventListener("click", function(){
-    if (a.thirdAnswer === a.rightAnswer){
-      score = score + 10;
-      setTimeout(positveScoreDisplay(), 3000);
-    }
-    else{
-      score = score - 10;
-      setTimeout(negativeScoreDisplay(), 3000);
-    }
-  })
-  answer4.addEventListener("click", function(){
-    if (a.fourthAnswer === a.rightAnswer){
-      score = score + 10;
-      setTimeout(positveScoreDisplay(), 3000);
-    }
-    else{
-      score = score - 10;
-      setTimeout(negativeScoreDisplay(), 3000);
-    }
-  })
+  // answer1.addEventListener("click", function(){
+  //   if (a.firstAnswer === a.rightAnswer){
+  //     score = score + 10;
+  //     setTimeout(positveScoreDisplay(), 3000)
+  //   }
+  //   else{
+  //     score = score - 10;
+  //     setTimeout(negativeScoreDisplay(), 3000)
+  //   }
+  // });
+  // answer2.addEventListener("click", function(){
+  //   if (a.secondAnswer === a.rightAnswer){
+  //     score = score + 10;
+  //     setTimeout(positveScoreDisplay(), 3000);
+  //   }
+  //   else{
+  //     score = score - 10;
+  //     setTimeout(negativeScoreDisplay(), 3000);
+  //   }
+  // })
+  // answer3.addEventListener("click", function(){
+  //   if (a.thirdAnswer === a.rightAnswer){
+  //     score = score + 10;
+  //     setTimeout(positveScoreDisplay(), 3000);
+  //   }
+  //   else{
+  //     score = score - 10;
+  //     setTimeout(negativeScoreDisplay(), 3000);
+  //   }
+  // })
+  // answer4.addEventListener("click", function(){
+  //   if (a.fourthAnswer === a.rightAnswer){
+  //     score = score + 10;
+  //     setTimeout(positveScoreDisplay(), 3000);
+  //   }
+  //   else{
+  //     score = score - 10;
+  //     setTimeout(negativeScoreDisplay(), 3000);
+  //   }
+  // })
 };
 
 // start quiz
@@ -175,53 +173,9 @@ function startQuiz () {
           answer4.setAttribute("class", "answerStyle");
 
           // run functions for the question up
-          while (questionUp < 11) {
-            if(questionUp === 1){
-              assignQuestion(question1);
-              questionUp = questionUp + 1;
-            };
-            if(questionUp === 2){
-              assignQuestion(question2);
-              questionUp++;
-            };
-            if(questionUp === 3){
-              assignQuestion(question3);
-              questionUp++;
-            };
-            if(questionUp === 4){
-              assignQuestion(question4);
-              questionUp++;
-            };
-            if(questionUp === 5){
-              assignQuestion(question5);
-              questionUp++;
-            };
-            if(questionUp === 6){
-              assignQuestion(question6);
-              questionUp++;
-            };
-            if(questionUp === 7){
-              assignQuestion(question7);
-              questionUp++;
-            };
-            if(questionUp === 8){
-              assignQuestion(question8);
-              questionUp++;
-            };
-            if(questionUp === 9){
-              assignQuestion(question9);
-              questionUp++;
-            };
-            if(questionUp === 10){
-              assignQuestion(question10);
-              questionUp++;
-            }
-            else{
-              alert("it's over")
-            };
-            
-          }
-          
+        for (var i = 0; i < questions.length; i++) {
+          assignQuestion(i);
+        }
 
         
           
