@@ -115,7 +115,7 @@ function positveScoreDisplay(){
 // negative score display
 function negativeScoreDisplay(){
   totalPossible = 10 * (questionUp + 1);
-  scoreBoard.innerText = "Sorry that's wrong! You have " + score + " points out of " + totalPossible + " points possible"
+  scoreBoard.innerText = "Sorry that's wrong! You lose 10 seconds! You have " + score + " points out of " + totalPossible + " points possible"
   setTimeout(function(){ scoreBoard.innerText = '';}, 3000);
   questionUp = questionUp + 1;
   assignQuestion(questionUp);
@@ -175,6 +175,7 @@ function checkAnswer(){
     positveScoreDisplay();
   }
   else{
+    timeRemaining = timeRemaining - 10;
     negativeScoreDisplay();
   };
 }
