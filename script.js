@@ -92,16 +92,27 @@ function positveScoreDisplay(){
   totalPossible = 10 * (questionUp + 1);
   score = score + 10;
   scoreBoard.innerText = "Correct! you've got " + score + " points out of " + totalPossible + " points possible."
+  setTimeout(function(){ scoreBoard.innerText = '';}, 3000);
+  questionUp = questionUp + 1;
+  assignQuestion(questionUp);
 }
 
 // negative score display
 function negativeScoreDisplay(){
   totalPossible = 10 * (questionUp + 1);
   scoreBoard.innerText = "Sorry that's wrong! You have " + score + " points out of " + totalPossible + " points possible"
+  setTimeout(function(){ scoreBoard.innerText = '';}, 3000);
+  questionUp = questionUp + 1;
+  assignQuestion(questionUp);
 }
 
 // assign question and answer content and add event listeners
 function assignQuestion(a){
+  // clear prior question content
+  ul1.innerHTML = "";
+  ul2.innerHTML = "";
+  questionBox.innerHTML = "";
+  
   // create list items
   var li1 = document.createElement("li");
   var li2 = document.createElement("li");
@@ -150,8 +161,7 @@ function checkAnswer(){
   }
   else{
     negativeScoreDisplay();
-  }
-  ;
+  };
 }
 
 // start timer function 
