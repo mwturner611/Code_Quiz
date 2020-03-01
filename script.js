@@ -91,7 +91,8 @@ question10 = {
 // create quiz image on screen
 var imgVar = document.createElement("img");
 imgVar.setAttribute("src", "assets/quiz.png");
-imgVar.setAttribute("style","margin:auto");
+imgVar.style.margin = "10px";
+imgVar.style.padding = "10px";
 imgVar.setAttribute("height" , "150");
 imgVar.setAttribute("width", "150");
 imgArea.appendChild(imgVar);
