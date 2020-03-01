@@ -5,7 +5,8 @@ var ul1 = document.getElementById('ul1');
 var ul2 = document.getElementById('ul2');
 var button = document.getElementById('button');
 var scoreBoard = document.getElementById('scoreBoard');
-var userAnswer = document.querySelectorAll('forAnsers')
+var imgArea = document.getElementById('imgArea');
+var userAnswer = document.querySelectorAll('forAnsers');
 var timeRemaining;
 var score = 0;
 var totalPossible = 0;
@@ -86,6 +87,19 @@ question10 = {
   fourthAnswer: {text: "Right", rW: "1"},
 }
 ];
+
+// create quiz image on screen
+var imgVar = document.createElement("img");
+imgVar.setAttribute("src", "assets/quiz.png");
+imgVar.setAttribute("style","margin:auto");
+imgVar.setAttribute("height" , "150");
+imgVar.setAttribute("width", "150");
+imgArea.appendChild(imgVar);
+
+// remove img from screen
+function removeImg(){
+  imgVar.remove();
+}
 
 // positive score display
 function positveScoreDisplay(){
@@ -190,6 +204,8 @@ function startQuiz () {
 // start button launches the timer function and question function
 button.addEventListener("click", function(){
   startQuiz();
-  assignQuestion(questionUp); 
+  assignQuestion(questionUp);
+  removeImg();
+
   });
 
