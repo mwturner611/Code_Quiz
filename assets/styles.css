@@ -25,6 +25,10 @@ body {
     font-size: x-large;
 }
 
+#timer{
+    font-size: x-large;
+}
+
 /* add hover color change to answers */
 .answerStyle:hover{
     background-color: lightgrey;
