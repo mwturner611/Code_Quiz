@@ -8,6 +8,7 @@ var scoreBoard = document.getElementById('scoreBoard');
 var imgArea = document.getElementById('imgArea');
 var userAnswer = document.querySelectorAll('forAnsers');
 var spotForHS = document.getElementById('highScores');
+var clearBtn = document.getElementById('clearBtn');
 var timeRemaining;
 var score = 0;
 var totalPossible = 0;
@@ -16,7 +17,7 @@ var answerValue = 0;
 var highScores = [];
 
 
-// question array
+// questions array of question objects using rW of '0' for wrong and '1' for right answers
 var questions = [
 question1 = {
   question: "Q1 - Which option below is the best example of camel case?",
@@ -90,6 +91,8 @@ question10 = {
 }
 ];
 
+// These run on open
+
 // create quiz image on screen
 var imgVar = document.createElement("img");
 imgVar.setAttribute("src", "assets/quiz.png");
@@ -99,12 +102,36 @@ imgVar.setAttribute("height" , "150");
 imgVar.setAttribute("width", "150");
 imgArea.appendChild(imgVar);
 
+// call high scores
+postHighScores();
+
+
+// button listeners
+
+// start button launches the timer function, question function and removes image
+button.addEventListener("click", function(){
+  startQuiz();
+  assignQuestion(questionUp);
+  removeImg();
+});
+
+// Clear local storage (high scores) and highScore array with click
+clearBtn.addEventListener("click", function() {
+  localStorage.clear();
+  highScores = [];
+  location.reload();
+
+});
+
+
+// Define the functions
+
 // remove img from screen
 function removeImg(){
   imgVar.remove();
 }
 
-// positive score display
+// triggered upon a right answer.  This adds to total points possible, current score, adds 1 to question up and shows a message on screen for 3 seconds.  IF the last question is done, move time to zero to trigger finish of game
 function positveScoreDisplay(){
   totalPossible = 10 * (questionUp + 1);
   score = score + 10;
@@ -120,7 +147,7 @@ function positveScoreDisplay(){
   }
 }
 
-// negative score display
+// // triggered upon a wrong answer.  This adds to total points possible, subtracts from timer available, adds 1 to question up, and shows a message on screen for 3 seconds.  IF the last question is done, move time to zero to trigger finish of game
 function negativeScoreDisplay(){
   totalPossible = 10 * (questionUp + 1);
   scoreBoard.innerText = "Sorry that's wrong! You lose 10 seconds! You have " + score + " points out of " + totalPossible + " points possible"
@@ -138,18 +165,18 @@ function negativeScoreDisplay(){
 
 // assign question and answer content and add event listeners
 function assignQuestion(a){
-  // clear prior question content
+  // clear prior question content if any
   ul1.innerHTML = "";
   ul2.innerHTML = "";
   questionBox.innerHTML = "";
   
-  // create list items
+  // create list items for answer options
   var li1 = document.createElement("li");
   var li2 = document.createElement("li");
   var li3 = document.createElement("li");
   var li4 = document.createElement("li");
 
-  // store li's in array
+  // store answers in array
   var listItems = document.getElementsByTagName("li");
 
   // assign question and answers
@@ -159,32 +186,44 @@ function assignQuestion(a){
   li3.innerText = questions[a].thirdAnswer.text;
   li4.innerText = questions[a].fourthAnswer.text;
 
-  // assign value to li tags
+  // assign value to li tags to judge right/wrong answer
   li1.value = questions[a].firstAnswer.rW;
   li2.value = questions[a].secondAnswer.rW;
   li3.value = questions[a].thirdAnswer.rW;
   li4.value = questions[a].fourthAnswer.rW;
 
-  // assign styles to the answer list
+  // assign styles to the answer list from css
   li1.setAttribute("class","answerStyle");
   li2.setAttribute("class","answerStyle");
   li3.setAttribute("class","answerStyle");
   li4.setAttribute("class","answerStyle");    
 
-  // append them to the page
+  // append answers to the page
   ul1.appendChild(li1);
   ul1.appendChild(li2);
   ul2.appendChild(li3);
   ul2.appendChild(li4);
 
- //Look for clicks on the answers
+ //Look for clicks on all answers and trigger check answer function
   for (var i = 0; i < listItems.length; i++){
     listItems[i].addEventListener('click', checkAnswer);
   };
  
 };
 
-// create form function
+// check answer for value of 1 or 0 and call one of two functions
+function checkAnswer(){
+  if(this.value === 1){
+    timeRemaining = timeRemaining + 5;
+    positveScoreDisplay();
+  }
+  else{
+    timeRemaining = timeRemaining - 10;
+    negativeScoreDisplay();
+  };
+}
+
+// create a form for user to enter user name, store in local storage
 function createForm(){
   // clear last question/timer and ask for name
   ul1.innerHTML = "";
@@ -222,15 +261,12 @@ function createForm(){
   
   // add an event listener to the button
   buttonForForm.addEventListener('click', function(){
-    localStorage.setItem(nextUser,score + " Score" + " for " + inputBox.value);
+    localStorage.setItem(nextUser,score + " - " + inputBox.value);
     postHighScores();
   });
 }
 
-// localStorage.clear();
-
-postHighScores();
-// post high scores function
+// push each local storage item into an array, sort the array by the values in the array prior to the first space in the string (i.e. the number) and then post each one to the screen in a list item.
 function postHighScores (){
   keys = Object.keys(localStorage),
   i = keys.length;
@@ -249,20 +285,7 @@ function postHighScores (){
   }  
 }
 
-
-// check answer function
-function checkAnswer(){
-  if(this.value === 1){
-    timeRemaining = timeRemaining + 5;
-    positveScoreDisplay();
-  }
-  else{
-    timeRemaining = timeRemaining - 10;
-    negativeScoreDisplay();
-  };
-}
-
-// subtracts 1 from time and clears interval if at zero time Remaining
+// subtracts 1 from time and clears interval if at zero time Remaining. removes start button.  When zero launches high score form
 function countDown(){
   if (timeRemaining >= 0){
     button.remove();
@@ -277,15 +300,6 @@ function countDown(){
 
 // starts setInterval function referencing countDown() 
 function startQuiz () {
-  timeRemaining = 10;
+  timeRemaining = 60;
   timerVariable = setInterval(countDown,1000);
 }
-
-
-// start button launches the timer function and question function
-button.addEventListener("click", function(){
-  startQuiz();
-  assignQuestion(questionUp);
-  removeImg();
-});
-
